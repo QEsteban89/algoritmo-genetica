@@ -1,0 +1,11 @@
+src/** linguist-detectable=true
+
+*.ts linguist-language=TypeScript
+*.js linguist-language=JavaScript
+*.py linguist-language=Python
+*.css linguist-language=CSS
+*.html linguist-language=HTML
+
+tsconfig.json linguist-documentation=true
+package.json linguist-documentation=true
+package-lock.json linguist-vendored=true
