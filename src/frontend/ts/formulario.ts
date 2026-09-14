@@ -25,14 +25,14 @@ export async function manejarEnvioFormulario(event: Event): Promise<void> {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
     const data = await response.json();
-    
     const resultados = data.Resultados ?? data.resultados ?? {};
+    const vectorSolucion = resultados.vector_solucion ?? [];
     const matriz = resultados.tablero_matriz ?? resultados.MatrizTablero;
     const historico = resultados.historico ?? resultados.Historico ?? [];
 
     if (data.Solucion && matriz) {
       printLog(`[Console Mensaje]: Vector Solucion en -> ${resultados.generaciones ?? 0} generaciones!`, 'success');
-      renderizarTablero(matriz);
+      renderizarTablero(matriz, vectorSolucion);
       renderizarGrafica(historico);
     } else {
       printLog(data.Log || '[Console Mensaje]: No se encontro vector solucion', 'error');

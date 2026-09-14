@@ -1,9 +1,15 @@
-export function renderizarTablero(matriz) {
+export function renderizarTablero(matriz, vectorSolucion) {
     const contenedor = document.querySelector('.tablero');
     if (!contenedor)
         return;
     const N = matriz.length;
-    contenedor.innerHTML = `<div class="tablero-grid" style="--N: ${N}"></div>`;
+    const textoVector = vectorSolucion ? `[${vectorSolucion.join(', ')}]` : '';
+    contenedor.innerHTML = `
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 0.75rem;">
+      <div class="tablero-grid" style="--N: ${N}"></div>
+      ${textoVector ? `<div style="font-family: monospace; font-size: 0.9rem; font-weight: bold; color: #0284c7; background: #e0f2fe; padding: 4px 12px; border-radius: 4px;">Vector Solución: ${textoVector}</div>` : ''}
+    </div>
+  `;
     const tableroGrid = contenedor.querySelector('.tablero-grid');
     for (let f = 0; f < N; f++) {
         for (let c = 0; c < N; c++) {
