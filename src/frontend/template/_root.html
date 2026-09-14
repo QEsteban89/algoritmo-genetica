@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}Algoritmo Genético{% endblock %}</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/_root.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tablero.css') }}">
+    <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
+</head>
+<body>
+    <header>
+        {% block header %}
+        {% endblock %}
+    </header>
+
+    <hr>
+    <main class="main-layout">
+        <section class="content-area">
+            {% block content %}{% endblock %}
+        </section>
+
+        <aside class="sidebar-area">
+            {% block info %}{% endblock %}
+        </aside>
+    </main>
+
+    <hr>
+    <footer>
+        <p>© 2026 Algoritmo Genético</p>
+    </footer>
+</body>
+</html>

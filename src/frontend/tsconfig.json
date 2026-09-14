@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "outDir": "./js",
+    "rootDir": "./ts",
+    "strict": true
+  },
+  "include": ["ts/**/*"]
+}

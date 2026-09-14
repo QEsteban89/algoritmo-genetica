@@ -1,0 +1,71 @@
+{% extends '_root.html' %}
+{% block titulo %} Inicio - {% endblock %}
+
+{% block header %}
+<article class="cart-presentation">
+    <h1>Implementación de un Algoritmo Evolutivo para el Problema de las N-Reinas</h1>
+    <p>
+        <b>Objectivo:</b><br> En parejas implementa un <b>algoritmo evolutivo</b> para resolver el problema de
+        las N-Reinas y analizar su rendimiento en términos del número de
+        generaciones necesarias para encontrar una solución óptima.
+    </p>
+</article>
+{% endblock %}
+
+
+{% block content %}
+<article class="ar-content">
+    <h1>Tablero</h1>
+    <nav class="tablero">
+
+    </nav>
+
+    <div class="grafica-container">
+      <h2>Convergencia Algorítmica (Colisiones)</h2>
+      <canvas id="fitnessChart" width="400" height="180"></canvas>
+    </div>
+</article>
+{% endblock %}
+
+{% block info %}
+<article class="target">
+  <form id="algo-form">
+    <ul class="des-list">
+      <li class="id">
+        <nav>
+          <h3>Tamaño del Tablero</h3>
+          <input type="number" id="tamanoTablero" min="4" max="16" value="8" required placeholder="Ej: 8">
+        </nav>
+      </li>
+      <li class="id">
+        <nav>
+          <h3>Población Inicial</h3>
+          <input type="number" id="poblacionInicial" min="10" value="100" required placeholder="Ej: 100">
+        </nav>
+      </li>
+      <li class="id">
+        <nav>
+          <h3>Número de Generaciones</h3>
+          <input type="number" id="generacionesRatio" min="1" value="500" required placeholder="Ej: 500">
+        </nav>
+      </li>
+      <li class="id">
+        <nav>
+          <h3>Ratio de Mutaciones</h3>
+          <input type="number" id="mutacionesRatio" step="0.01" min="0" max="1" value="0.2" required placeholder="Ej: 0.2">
+        </nav>
+      </li>
+    </ul>
+
+    <button type="submit" id="btn-ejecutar">Ejecutar Algoritmo</button>
+  </form>
+
+  <nav class="log">
+    <h4>Terminal Log</h4>
+    <div id="log-output" class="infomation">
+      <p>[Sistema] Esperando parámetros para iniciar...</p>
+    </div>
+  </nav>
+</article>
+{% endblock %}
+
