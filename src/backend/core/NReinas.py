@@ -29,4 +29,5 @@ class NReinas:
         for i in range(self.N):
             fila = b[i]
             representacion[fila, i] = 1
-        print(representacion)
+        #print(representacion)
+        return representacion

@@ -49,7 +49,6 @@ class Genetica:
             mejor_valor_historico.append(mejor_valor)
 
             if mejor_valor == 0:
-                # CORREGIDO: argmax sobre 'valor'
                 mejor_indice = np.argmax(valor)
                 print(f"Solución óptima encontrada en la generación {gen + 1}")
                 return poblacion[mejor_indice], mejor_valor_historico
