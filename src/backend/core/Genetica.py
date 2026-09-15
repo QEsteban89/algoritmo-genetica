@@ -22,15 +22,23 @@ class Genetica:
     def _crossover(self, padre: np.ndarray, madre: np.ndarray) -> np.ndarray:
         N = len(padre)
         punto = np.random.randint(1, N - 1)
-        hijo = np.concatenate((padre[:punto], madre[punto:]))
 
-        unico_valor = set(hijo)
-        valor_perdido = list(set(range(N)) - unico_valor)
-        np.random.shuffle(valor_perdido)
-
-        for i in range(N):
-            if list(hijo).count(hijo[i]) > 1:
-                hijo[i] = valor_perdido.pop()
+        hijo = np.empty(N, dtype=int)
+        hijo[:punto] = padre[:punto]
+        
+        vistos = set(padre[:punto])
+        
+        faltantes = list(set(range(N)) - vistos)
+        np.random.shuffle(faltantes)
+        
+        for i in range(punto, N):
+            val = madre[i]
+            if val not in vistos:
+                hijo[i] = val
+                vistos.add(val)
+            else:
+                hijo[i] = faltantes.pop()
+                
         return hijo
 
     def _mutacion(self, item: np.ndarray) -> np.ndarray:
