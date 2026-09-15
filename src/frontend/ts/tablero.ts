@@ -2,46 +2,58 @@ export function renderizarTablero(matriz: number[][], vectorSolucion?: number[])
   const contenedor = document.querySelector('.tablero') as HTMLElement;
   if (!contenedor) return;
 
-  const N = matriz.length;
+  const N = vectorSolucion ? vectorSolucion.length : matriz.length;
   const textoVector = vectorSolucion ? `[${vectorSolucion.join(', ')}]` : '';
 
+  // 1. Inyectamos la estructura HTML con un Canvas de alta definición
   contenedor.innerHTML = `
     <div style="display: flex; flex-direction: column; align-items: center; gap: 0.75rem; width: 100%;">
-      <div class="tablero-grid" style="--N: ${N}"></div>
+      <canvas id="tableroCanvas" width="500" height="500" style="border: 2px solid #334155; border-radius: 6px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); max-width: 90vw; max-height: 90vw;"></canvas>
       ${textoVector ? `<div style="font-family: monospace; font-size: 0.85rem; font-weight: bold; color: #0284c7; background: #e0f2fe; padding: 6px 12px; border-radius: 4px; max-width: 90vw; overflow-x: auto; white-space: nowrap;">Vector Solución: ${textoVector}</div>` : ''}
     </div>
   `;
-  const tableroGrid = contenedor.querySelector('.tablero-grid') as HTMLElement;
 
-  const fontSizeRem = Math.max(0.2, Math.min(1.4, 20 / N));
-  const esGranTablero = N >= 30;
+  const canvas = document.getElementById('tableroCanvas') as HTMLCanvasElement;
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
 
+  const tamaño = canvas.width;
+  const tamañoCasilla = tamaño / N;
+
+  // 2. Dibujar el tablero de ajedrez (Casillas claras y oscuras)
   for (let f = 0; f < N; f++) {
     for (let c = 0; c < N; c++) {
-      const esClara = ((f + c) % 2 === 0);
-      const casilla = document.createElement('div');
-      casilla.className = `casilla ${esClara ? 'clara' : 'oscura'}`;
-
-      if (matriz[f][c] === 1) {
-        if (esGranTablero) {
-          const puntoReina = document.createElement('div');
-          puntoReina.style.width = '70%';
-          puntoReina.style.height = '70%';
-          puntoReina.style.backgroundColor = '#ef4444'; 
-          puntoReina.style.borderRadius = '50%';
-          puntoReina.style.boxShadow = '0 0 2px rgba(0,0,0,0.5)';
-          casilla.appendChild(puntoReina);
-        } else {
-          const reina = document.createElement('span');
-          reina.className = 'reina';
-          reina.style.fontSize = `${fontSizeRem}rem`;
-          reina.textContent = '♛';
-          casilla.appendChild(reina);
-        }
-      }
-
-      tableroGrid.appendChild(casilla);
+      const esClara = (f + c) % 2 === 0;
+      ctx.fillStyle = esClara ? '#f8fafc' : '#0284c7';
+      ctx.fillRect(c * tamañoCasilla, f * tamañoCasilla, tamañoCasilla, tamañoCasilla);
     }
+  }
+
+  // 3. Dibujar las 100 reinas garantizadas desde el vectorSolucion
+  if (vectorSolucion && vectorSolucion.length > 0) {
+    vectorSolucion.forEach((filaReina, col) => {
+      const x = col * tamañoCasilla + tamañoCasilla / 2;
+      const y = filaReina * tamañoCasilla + tamañoCasilla / 2;
+
+      if (N >= 30) {
+        // Marcador rojo brillante para alta densidad (100 reinas)
+        ctx.beginPath();
+        ctx.arc(x, y, Math.max(1.5, tamañoCasilla * 0.35), 0, 2 * Math.PI);
+        ctx.fillStyle = '#ef4444';
+        ctx.fill();
+        ctx.strokeStyle = '#7f1d1d';
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      } else {
+        // Corona UTF-8 para tableros pequeños
+        ctx.fillStyle = '#0f172a';
+        ctx.font = `${Math.floor(tamañoCasilla * 0.7)}px sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('♛', x, y);
+      }
+    });
   }
 }
 
