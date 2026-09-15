@@ -5,7 +5,6 @@ export function renderizarTablero(matriz: number[][], vectorSolucion?: number[])
   const N = vectorSolucion ? vectorSolucion.length : matriz.length;
   const textoVector = vectorSolucion ? `[${vectorSolucion.join(', ')}]` : '';
 
-  // 1. Inyectamos la estructura HTML con un Canvas de alta definición
   contenedor.innerHTML = `
     <div style="display: flex; flex-direction: column; align-items: center; gap: 0.75rem; width: 100%;">
       <canvas id="tableroCanvas" width="500" height="500" style="border: 2px solid #334155; border-radius: 6px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); max-width: 90vw; max-height: 90vw;"></canvas>
@@ -21,7 +20,6 @@ export function renderizarTablero(matriz: number[][], vectorSolucion?: number[])
   const tamaño = canvas.width;
   const tamañoCasilla = tamaño / N;
 
-  // 2. Dibujar el tablero de ajedrez (Casillas claras y oscuras)
   for (let f = 0; f < N; f++) {
     for (let c = 0; c < N; c++) {
       const esClara = (f + c) % 2 === 0;
@@ -30,14 +28,12 @@ export function renderizarTablero(matriz: number[][], vectorSolucion?: number[])
     }
   }
 
-  // 3. Dibujar las 100 reinas garantizadas desde el vectorSolucion
   if (vectorSolucion && vectorSolucion.length > 0) {
     vectorSolucion.forEach((filaReina, col) => {
       const x = col * tamañoCasilla + tamañoCasilla / 2;
       const y = filaReina * tamañoCasilla + tamañoCasilla / 2;
 
       if (N >= 30) {
-        // Marcador rojo brillante para alta densidad (100 reinas)
         ctx.beginPath();
         ctx.arc(x, y, Math.max(1.5, tamañoCasilla * 0.35), 0, 2 * Math.PI);
         ctx.fillStyle = '#ef4444';
@@ -46,7 +42,6 @@ export function renderizarTablero(matriz: number[][], vectorSolucion?: number[])
         ctx.lineWidth = 0.5;
         ctx.stroke();
       } else {
-        // Corona UTF-8 para tableros pequeños
         ctx.fillStyle = '#0f172a';
         ctx.font = `${Math.floor(tamañoCasilla * 0.7)}px sans-serif`;
         ctx.textAlign = 'center';
