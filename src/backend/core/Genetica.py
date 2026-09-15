@@ -50,16 +50,23 @@ class Genetica:
     def solucion(self, fit, cromosoma_tamaño: int):
         poblacion = self._crear_poblacion(cromosoma_tamaño)
         mejor_valor_historico = []
+        
+        mejor_individuo_global = poblacion[0]
+        mejor_fit_global = float('-inf')
 
         for gen in range(self.generaciones):
             valor = np.array([fit(j) for j in poblacion])
-            mejor_valor = max(valor)
-            mejor_valor_historico.append(mejor_valor)
+            mejor_valor_actual = max(valor)
+            mejor_valor_historico.append(int(mejor_valor_actual))
 
-            if mejor_valor == 0:
-                mejor_indice = np.argmax(valor)
+            indice_actual = np.argmax(valor)
+            if valor[indice_actual] > mejor_fit_global:
+                mejor_fit_global = valor[indice_actual]
+                mejor_individuo_global = poblacion[indice_actual]
+
+            if mejor_valor_actual == 0:
                 print(f"Solución óptima encontrada en la generación {gen + 1}")
-                return poblacion[mejor_indice], mejor_valor_historico
+                return mejor_individuo_global, mejor_valor_historico
 
             padres = self._seleccion(poblacion, valor)
 
@@ -72,4 +79,4 @@ class Genetica:
                 
             poblacion = poblacion_nueva
 
-        return None, mejor_valor_historico
+        return mejor_individuo_global, mejor_valor_historico
