@@ -6,12 +6,15 @@ export function renderizarTablero(matriz: number[][], vectorSolucion?: number[])
   const textoVector = vectorSolucion ? `[${vectorSolucion.join(', ')}]` : '';
 
   contenedor.innerHTML = `
-    <div style="display: flex; flex-direction: column; align-items: center; gap: 0.75rem;">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 0.75rem; width: 100%;">
       <div class="tablero-grid" style="--N: ${N}"></div>
-      ${textoVector ? `<div style="font-family: monospace; font-size: 0.9rem; font-weight: bold; color: #0284c7; background: #e0f2fe; padding: 4px 12px; border-radius: 4px;">Vector Solución: ${textoVector}</div>` : ''}
+      ${textoVector ? `<div style="font-family: monospace; font-size: 0.85rem; font-weight: bold; color: #0284c7; background: #e0f2fe; padding: 6px 12px; border-radius: 4px; max-width: 90vw; overflow-x: auto; white-space: nowrap;">Vector Solución: ${textoVector}</div>` : ''}
     </div>
   `;
   const tableroGrid = contenedor.querySelector('.tablero-grid') as HTMLElement;
+
+  // Tamaño dinámico del icono proporcional a N
+  const fontSizeRem = Math.max(0.2, Math.min(1.4, 20 / N));
 
   for (let f = 0; f < N; f++) {
     for (let c = 0; c < N; c++) {
@@ -22,6 +25,7 @@ export function renderizarTablero(matriz: number[][], vectorSolucion?: number[])
       if (matriz[f][c] === 1) {
         const reina = document.createElement('span');
         reina.className = 'reina';
+        reina.style.fontSize = `${fontSizeRem}rem`;
         reina.textContent = '♛';
         casilla.appendChild(reina);
       }

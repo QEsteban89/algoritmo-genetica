@@ -4,26 +4,28 @@
   align-items: center;
   width: 100%;
   margin: 1rem 0 1.5rem 0;
+  overflow-x: auto; 
 }
 
 .tablero-grid {
   display: grid;
   grid-template-columns: repeat(var(--N, 8), 1fr);
   grid-template-rows: repeat(var(--N, 8), 1fr);
-  width: 320px;
-  height: 320px;
+  width: min(90vw, max(360px, calc(var(--N, 8) * 12px)));
+  height: min(90vw, max(360px, calc(var(--N, 8) * 12px)));
+  max-width: 600px;
+  max-height: 600px;
   border: 2px solid #334155;
   border-radius: 6px;
   overflow: hidden;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
-
 .casilla {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.4rem;
   user-select: none;
+  line-height: 1;
 }
 
 .casilla.clara {
@@ -37,6 +39,8 @@
 .casilla .reina {
   color: #0f172a;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  display: inline-block;
+  text-align: center;
 }
 
 .grafica-container {
