@@ -12,16 +12,17 @@ class NReinas:
     def _crear_tablero(self) -> np.ndarray:
         return np.random.permutation(self.N)
 
-    def _evaluar_tablero(self, b: np.ndarray) -> int:
-        M = len(b)
-
-        ataque = 0
-
-        for i in range(M):
-            for j in range(i + 1, M):
-                if(b[i] == b[j] or abs(b[i] - b[j]) == abs(i - j)):
-                    ataque += 1
-        return -ataque
+    def _evaluar_tablero(self, tablero):
+        N = len(tablero)
+        colisiones = N - len(set(tablero))
+        
+        diag1 = tablero - np.arange(N)
+        diag2 = tablero + np.arange(N)
+        
+        colisiones += (N - len(set(diag1)))
+        colisiones += (N - len(set(diag2)))
+        
+        return -colisiones
 
     def _imprimir_board(self, b: np.ndarray):
         representacion = np.zeros((self.N, self.N), dtype=int)

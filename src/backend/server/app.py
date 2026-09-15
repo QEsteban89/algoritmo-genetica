@@ -32,6 +32,9 @@ def render():
     generaciones = int(data.get('generacionesRatio', 500))
     mutacion = float(data.get('mutacionesRatio', 0.2))
 
+    if(tamanotablero >= 50):
+        generaciones = min(generaciones, 100)
+
     r = Renderizar(
         tamanoTablero=tamanotablero,
         poblacionInicial=poblacion,
