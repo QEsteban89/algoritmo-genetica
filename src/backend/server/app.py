@@ -10,7 +10,7 @@ SRC_DIR = BACKEND_DIR.parent
 sys.path.append(str(SRC_DIR))
 sys.path.append(str(BACKEND_DIR))
 
-from renderizar import Renderizar
+from .renderizar import Renderizar
 
 FRONTEND_DIR = SRC_DIR / "frontend"
 
