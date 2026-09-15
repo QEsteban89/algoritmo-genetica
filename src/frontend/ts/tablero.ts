@@ -13,8 +13,8 @@ export function renderizarTablero(matriz: number[][], vectorSolucion?: number[])
   `;
   const tableroGrid = contenedor.querySelector('.tablero-grid') as HTMLElement;
 
-  // Tamaño dinámico del icono proporcional a N
   const fontSizeRem = Math.max(0.2, Math.min(1.4, 20 / N));
+  const esGranTablero = N >= 30;
 
   for (let f = 0; f < N; f++) {
     for (let c = 0; c < N; c++) {
@@ -23,11 +23,21 @@ export function renderizarTablero(matriz: number[][], vectorSolucion?: number[])
       casilla.className = `casilla ${esClara ? 'clara' : 'oscura'}`;
 
       if (matriz[f][c] === 1) {
-        const reina = document.createElement('span');
-        reina.className = 'reina';
-        reina.style.fontSize = `${fontSizeRem}rem`;
-        reina.textContent = '♛';
-        casilla.appendChild(reina);
+        if (esGranTablero) {
+          const puntoReina = document.createElement('div');
+          puntoReina.style.width = '70%';
+          puntoReina.style.height = '70%';
+          puntoReina.style.backgroundColor = '#ef4444'; 
+          puntoReina.style.borderRadius = '50%';
+          puntoReina.style.boxShadow = '0 0 2px rgba(0,0,0,0.5)';
+          casilla.appendChild(puntoReina);
+        } else {
+          const reina = document.createElement('span');
+          reina.className = 'reina';
+          reina.style.fontSize = `${fontSizeRem}rem`;
+          reina.textContent = '♛';
+          casilla.appendChild(reina);
+        }
       }
 
       tableroGrid.appendChild(casilla);
